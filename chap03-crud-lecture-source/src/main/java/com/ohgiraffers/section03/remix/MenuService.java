@@ -1,0 +1,95 @@
+package com.ohgiraffers.section03.remix;
+
+import org.apache.ibatis.session.SqlSession;
+
+import java.util.List;
+
+import static com.ohgiraffers.section03.remix.Template.getSqlsession;
+
+
+public class MenuService {
+
+    private MenuMapper menuMapper;
+    public List<MenuDTO> selectAllMenu() {
+
+        SqlSession sqlSession = getSqlsession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        List<MenuDTO> menuList = menuMapper.selectAllMenu();
+
+        sqlSession.close();
+
+        return menuList;
+
+    }
+
+    public MenuDTO selectMenuByCode(int code) {
+
+        SqlSession sqlSession = getSqlsession();
+        /* 필기. sqlSession 은 요청 단위로 생성해야 하기 떄문에 getMapper로 메소드 스코프로 매번 불러와야 한다. */
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        MenuDTO menu = menuMapper.selectMenuByCode(code);
+
+        sqlSession.close();
+
+        return menu;
+
+
+    }
+
+    public boolean registMenu(MenuDTO menu) {
+
+        SqlSession sqlSession = getSqlsession();
+
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.insertMenu(menu);
+
+        if(result > 0){
+            sqlSession.commit();
+        }else {
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+
+        return result > 0 ? true : false ;
+
+    }
+
+    public boolean updateMenu(MenuDTO menu) {
+        SqlSession sqlSession = getSqlsession();
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.updateMenu(menu);
+
+        if(result > 0){
+            sqlSession.commit();
+        }else {
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+
+        return result > 0 ? true: false;
+
+    }
+
+    public boolean deleteMenu(int code) {
+
+        SqlSession sqlSession = getSqlsession();
+        menuMapper = sqlSession.getMapper(MenuMapper.class);
+
+        int result = menuMapper.deleteMenu(code);
+
+        if(result > 0){
+            sqlSession.commit();
+        }else {
+            sqlSession.rollback();
+        }
+        sqlSession.close();
+
+        return result > 0 ? true: false;
+
+    }
+}

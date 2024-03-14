@@ -39,7 +39,7 @@ public class Application {
         configuration.addMapper(Mapper.class);
 
         /* 필기.
-        *   SqlSessionFactory : SqlSession 객체를 생성하기 위한 책토리 역할의 인터페이스
+        *   SqlSessionFactory : SqlSession 객체를 생성하기 위한 팩토리 역할의 인터페이스
         *   SqlSessionFactoryBuilder : SqlSessionFactory 인터페이스 타입의 하위 구현객체를 생성하기 위한 빌드 역할
         *   build() : 환경 설정에 대한 정보를 담고 있는 Configuration 타입의 객체 혹은 외부 설정 파일과 연결 된 Stream
         *             을 매개변수로 전달하면 SqlSessionFactory 인터페이스 타입의 객체를 반환하는 메소드
